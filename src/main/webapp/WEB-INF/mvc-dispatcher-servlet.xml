@@ -1,0 +1,71 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.springapp.mvc"/>
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/pages/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!--Представление для JAXB@-->
+    <bean id="viewName" class="java.lang.String">
+        <constructor-arg value="viewJaxb"/>
+    </bean>
+
+    <!--Представление для JAXB@-->
+    <bean id="dateFormat" class="java.lang.String">
+        <constructor-arg value="yyyy-MM-dd"/>
+    </bean>
+
+    <bean id="ldapList" class="java.lang.String">
+        <constructor-arg value="'dn270985vdp','DN170779RAA','DN030190SBR','DN120990MGN1','DN101187AJN','DN091289VRV',
+        'DN170878KSV','DN020986LEV','DN071175MAJ','dn040589lvv1','dn140192tiv','dn250886lmg','dn020589sea','DN271288AEV',
+        'DN061284BAM','DN270189KBS','DN210780MSV','DN260484MSA','DN020189LDA','dn070890sds','dn080287dep','it160591sas',
+        'dn150786cjm','DN010389ADV','DN041088TEM','IT240476MEV','dn310387ism','dn260591aoi','it091090mas','dn210990jjs2'"/>
+    </bean>
+
+    <!-- Initialization for data source -->
+    <bean id="dataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://10.1.102.217:3306/tl"/>
+        <property name="username" value="tl_ro"/>
+        <property name="password" value="tltl"/>
+    </bean>
+
+    <!--<bean id="dataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://127.0.0.1:3306/testlink"/>
+        <property name="username" value="root"/>
+        <property name="password" value="usbw"/>
+    </bean>-->
+
+    <!--DAO-->
+    <bean id="usersDao" class="com.springapp.mvc.dao.UsersDao">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="rowMaper">
+            <bean class="com.springapp.mvc.dao.rowmapper.UsersRowMapper"/>
+        </property>
+    </bean>
+    <bean id="tcversionsDao" class="com.springapp.mvc.dao.TcversionsDao">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="rowMaper">
+            <bean class="com.springapp.mvc.dao.rowmapper.TcversionsRowMapper"/>
+        </property>
+    </bean>
+    <bean id="fortableDao" class="com.springapp.mvc.dao.FortableDao">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="rowMaper">
+            <bean class="com.springapp.mvc.dao.rowmapper.FortableRowMapper"/>
+        </property>
+    </bean>
+
+
+</beans>
